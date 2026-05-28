@@ -4,7 +4,22 @@
         <title>ASCII Art</title>
     </head>
     <body>
-        <h1>ASCII Art Generator</h1>
-        <p>Welcome!</p>
+        <p1>Different styles, One message</p1>
+        <form action="/ascii-art" method="post">
+            <input type="text" name="text" placeholder="Enter text here" required>
+
+            <input type="radio" id="standard" name="banner"  value="standard" checked>
+            <label for="Standard">standard</label>
+
+            <input type="radio" id="standard" name="banner" value="shadow">
+            <label for="shadow">shadow</label>
+
+            <input type="radio" id="thinkertoy" name="banner" value="thinkertoy">
+            <label for="thinkertoy">thinkertoy</label>
+
+            <button type="submit">Generate</button>
+        </form>
     </body>
+
+    
 </html>

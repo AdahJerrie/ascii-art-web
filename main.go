@@ -7,33 +7,54 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, req *http.Request) {
-	//w is how you send respnses
-	//req is how requests come in
-	//Fmt.Fprintln - writes to the brwoser instead of terminal
-	/*fmt.Fprintln(w, `
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<title>ASCII Art</title>
-		</head>
-		<body>
-			<h1>ASCII Art Generator</h1>
-			<p>Welcome to the ASCII art web app</p>
-		</body>
-	</html>
-	`)
-	*/
+
+	if req.URL.Path != "/" {
+		http.Error(w, "page not found", http.StatusNotFound)
+		return
+	}
 
 	templ, err := template.ParseFiles("template/index.html")
 	if err != nil {
+		http.Error(w, "Internal Server error", http.StatusInternalServerError)
 		return
 	}
-	templ.Execute(w, nil)
+
+	if err := templ.Execute(w, nil); err != nil {
+		http.Error(w, "Internal Server error", http.StatusInternalServerError)
+		return
+	}
+}
+
+func asciiHandler(w http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodPost {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	txt := req.FormValue("text")
+	banners := req.FormValue("banner")
+
+	if txt == "" || banners == "" {
+		http.Error(w, "Empty values", http.StatusBadRequest)
+		return
+	}
+
+	bannerPath := fmt.Sprintf("banners/%s.txt", banners)
+	loaded, err := LoadBanner(bannerPath)
+	if err != nil {
+		http.Error(w, "error loading banner", http.StatusNotFound)
+		return
+	}
+
+	output := BuildArt(txt, loaded)
+	fmt.Fprint(w, output)
+
 }
 
 func main() {
 	http.HandleFunc("/", homeHandler)
-	fmt.Println("server running on port 8080")
+	http.HandleFunc("/ascii-art", asciiHandler)
 
+	fmt.Println("server running on port 8080")
 	http.ListenAndServe(":8080", nil)
 }

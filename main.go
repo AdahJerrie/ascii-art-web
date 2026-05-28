@@ -9,7 +9,7 @@ import (
 func homeHandler(w http.ResponseWriter, req *http.Request) {
 	//w is how you send respnses
 	//req is how requests come in
-	//Fmt.Fprintln - writes to the brwoser instead of terminal
+	//Fmt.Fprintln - writes to the browser instead of terminal
 	/*fmt.Fprintln(w, `
 	<!DOCTYPE html>
 	<html>

@@ -7,22 +7,6 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, req *http.Request) {
-	//w is how you send respnses
-	//req is how requests come in
-	//Fmt.Fprintln - writes to the brwoser instead of terminal
-	/*fmt.Fprintln(w, `
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<title>ASCII Art</title>
-		</head>
-		<body>
-			<h1>ASCII Art Generator</h1>
-			<p>Welcome to the ASCII art web app</p>
-		</body>
-	</html>
-	`)
-	*/
 
 	templ, err := template.ParseFiles("template/index.html")
 	if err != nil {

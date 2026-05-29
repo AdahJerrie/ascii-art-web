@@ -47,8 +47,20 @@ func asciiHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	output := BuildArt(txt, loaded)
-	fmt.Fprint(w, output)
 
+	templ, err := template.ParseFiles("template/index.html")
+	if err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	data := map[string]string{
+		"Result": output,
+	}
+	if err := templ.Execute(w, data); err != nil {
+		http.Error(w, "internal server error", http.StatusInternalServerError)
+		return
+	}
 }
 
 func main() {

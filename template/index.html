@@ -4,14 +4,15 @@
         <title>ASCII Art</title>
     </head>
     <body>
-        <p1>Different styles, One message</p1>
+        <pre>{{.Result}}</pre>
+        <p>Different styles, One message</p>
         <form action="/ascii-art" method="post">
             <input type="text" name="text" placeholder="Enter text here" required>
 
             <input type="radio" id="standard" name="banner"  value="standard" checked>
             <label for="Standard">standard</label>
 
-            <input type="radio" id="standard" name="banner" value="shadow">
+            <input type="radio" id="shadow" name="banner" value="shadow">
             <label for="shadow">shadow</label>
 
             <input type="radio" id="thinkertoy" name="banner" value="thinkertoy">

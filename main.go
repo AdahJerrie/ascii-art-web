@@ -8,6 +8,11 @@ import (
 
 func homeHandler(w http.ResponseWriter, req *http.Request) {
 
+	if req.URL.Path != "/" {
+		http.Error(w, "page not found", http.StatusNotFound)
+		return
+	}
+
 	templ, err := template.ParseFiles("template/index.html")
 	if err != nil {
 		http.Error(w, "Internal Server error", http.StatusInternalServerError)
